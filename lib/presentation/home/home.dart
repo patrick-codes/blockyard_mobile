@@ -1,9 +1,7 @@
 import 'package:blockyard_mobile/helpers/widgets/cedi_widget.dart';
 import 'package:blockyard_mobile/utils/constants/color%20constants/colors.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
-
 import '../../helpers/text_widgets.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -16,74 +14,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static String? usersId;
   static var items = [
-    'Electronics',
-    'Shoes',
-    'Bags',
-    'Gadgets',
-    'Sanitary ware',
-    'Shoes',
-    'Appliances',
-    'Bags',
-    'Accecories',
-    'Sanitary ware',
+    'Standard',
+    'Hollow',
+    'Decorative',
+    'Concrete',
+    'Specialty',
   ];
-  // static List<IconData> icons = <IconData>[
-  //   Icons.tv,
-  //   Icons.mode_fan_off_outlined,
-  //   Icons.luggage_rounded,
-  //   Icons.baby_changing_station_outlined,
-  //   Icons.rice_bowl_sharp,
-  //   Icons.iron_rounded,
-  //   Icons.tv,
-  //   Icons.mode_fan_off_outlined,
-  //   Icons.luggage_rounded,
-  //   Icons.baby_changing_station_outlined,
-  // ];
 
   static final List imgs = [
-    "assets/images/img-one.jpg",
-    "assets/images/img-two.jpg",
-    "assets/images/img-three.jpg",
-    "assets/images/img-one.jpg",
-    "assets/images/hotel_3.png",
-    "assets/images/img-one.jpg",
-    "assets/images/img-two.jpg",
-    "assets/images/img-three.jpg",
-  ];
-
-  // static List<String> title = <String>[
-  //   "Learning to Reset",
-  //   "Holistic Approach",
-  //   "Guiding your Flock",
-  //   "title four",
-  //   "title five",
-  //   "Learning to Reset",
-  //   "Holistic Approach",
-  //   "Guiding your Flock",
-  // ];
-
-  // static final List subTitle = [
-  //   "Sub title one",
-  //   "Sub title two",
-  //   "Sub title three",
-  //   "Sub title four",
-  //   "Sub title five",
-  //   "Sub title three",
-  //   "Sub title four",
-  //   "Sub title five",
-  // ];
-
-  static List<String> pngs = <String>[
-    "assets/pngs/e-two.png",
-    "assets/pngs/e-one.png",
-    "assets/pngs/e-three.png",
-    "assets/pngs/e-two.png",
-    "assets/pngs/grocery-one.png",
-    "assets/pngs/grocery-two.png",
-    "assets/pngs/product-one.png",
-    "assets/pngs/products-two.png",
+    "assets/images/53192505_1887479504695737_3710208112829923328_o-3.jpg",
+    "assets/images/fly-ash-bricks-solid-concrete-bricks-from-visakhapatnam-factory-1000x1000.jpeg",
+    "assets/images/Untitled-design-5.png",
+    "assets/images/53192505_1887479504695737_3710208112829923328_o-3.jpg",
+    "assets/images/fly-ash-bricks-solid-concrete-bricks-from-visakhapatnam-factory-1000x1000.jpeg",
   ];
 
   @override
@@ -140,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     AppBar(
                       automaticallyImplyLeading: false,
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: whiteColor,
                       actions: [
                         GestureDetector(
                           onTap: () {},
@@ -370,7 +314,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: ListView.builder(
                               physics: BouncingScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: pngs.length,
+                              itemCount: 5,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (BuildContext context, int index) {
                                 return Column(
@@ -484,7 +428,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                   return Row(
                                     children: [
                                       GestureDetector(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            '/details',
+                                            arguments: {"id": imgs[index]},
+                                          );
+                                        },
                                         child: Container(
                                           width: 150,
                                           height: 220,
@@ -493,13 +443,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                             color: Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(8),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                blurRadius: 2,
-                                                spreadRadius: 0.5,
-                                                color: Colors.black12,
-                                              ),
-                                            ],
                                           ),
                                           child: Stack(
                                             children: [
@@ -514,9 +457,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     decoration: BoxDecoration(
                                                       image: DecorationImage(
                                                         image: Image.asset(
-                                                          'assets/pngs/e-two.png',
+                                                          imgs[index],
                                                         ).image,
-                                                        fit: BoxFit.contain,
+                                                        fit: BoxFit.cover,
                                                       ),
                                                       color: outlineGrey,
                                                       // color: const Color.fromARGB(
@@ -527,22 +470,27 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     ),
                                                     child: Column(
                                                       children: [
+                                                        SizedBox(height: 5),
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .end,
                                                           children: [
                                                             Container(
-                                                              height: 25,
-                                                              width: 25,
+                                                              height: 20,
+                                                              width: 90,
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
+                                                                color: const Color
+                                                                    .fromARGB(
+                                                                    156,
+                                                                    238,
+                                                                    238,
+                                                                    238),
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            30),
+                                                                            10),
                                                                 boxShadow: [
                                                                   BoxShadow(
                                                                     blurRadius:
@@ -556,12 +504,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                   ),
                                                                 ],
                                                               ),
-                                                              child: const Icon(
-                                                                Icons
-                                                                    .favorite_border_outlined,
-                                                                color:
-                                                                    blackColor,
-                                                                size: 13,
+                                                              child: Center(
+                                                                child: Text(
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  softWrap:
+                                                                      true,
+                                                                  '16x8x8 inches',
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        10,
+                                                                    color:
+                                                                        blackColor,
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
@@ -583,7 +544,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           softWrap: true,
-                                                          'Dell Latitude E7720',
+                                                          '${items[index]} Blocks',
                                                           style: TextStyle(
                                                             fontSize: 14,
                                                             color: blackColor,
@@ -596,7 +557,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           softWrap: true,
-                                                          '128GB SSD, 3ghz Speed',
+                                                          'Soft Gray | 32 lbs each',
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 10,
@@ -619,7 +580,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                           .bold,
                                                                 ),
                                                                 Text(
-                                                                  '200',
+                                                                  '2.99',
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           20,

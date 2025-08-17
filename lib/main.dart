@@ -1,7 +1,7 @@
 import 'package:blockyard_mobile/presentation/home/main_home.dart';
 import 'package:flutter/material.dart';
 
-import 'presentation/home/home.dart';
+import 'helpers/widgets/generate_route.dart';
 import 'utils/constants/color constants/colors.dart';
 
 void main() {
@@ -17,12 +17,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BlockYard Ghana',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MainHomePage(),
+      },
+      onGenerateRoute: generateRoute,
       theme: ThemeData(
         fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: whiteColor),
         useMaterial3: true,
       ),
-      home: const MainHomePage(),
     );
   }
 }
