@@ -1,8 +1,3 @@
-const String baseUrl = 'https://api.trotro.live';
-const String stationsUrl = '$baseUrl' '/api/stations/';
-const String nearbystationsUrl = '$baseUrl' '/api/stations/nearest/';
-const String tripsUrl = '$baseUrl' '/api/trips/';
-const String storiesUrl = '$baseUrl' '/stories/';
-
-//
-const String testUrl = 'https://angularworldclub.com/api/event/';
+const String baseUrl = 'https://block-yard-backend.onrender.com';
+const String loginUrl = '$baseUrl/api/users/login';
+const String signupUrl = '$baseUrl/api/users/register';

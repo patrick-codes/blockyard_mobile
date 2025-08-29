@@ -48,12 +48,23 @@ class CustomButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              isLoading == true
+                  ? SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: whiteColor,
+                      ),
+                    )
+                  : SizedBox.shrink(),
+              SizedBox(width: 8),
               Text(
                 text,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: textColor ?? whiteColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
                     ),
               ),
             ],
