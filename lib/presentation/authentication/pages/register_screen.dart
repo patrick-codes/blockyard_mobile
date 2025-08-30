@@ -1,14 +1,13 @@
 import 'package:blockyard_mobile/presentation/authentication/bloc/auth_bloc.dart';
+import 'package:blockyard_mobile/presentation/authentication/bloc/auth_events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:toastification/toastification.dart';
-
 import '../../../helpers/text_widgets.dart';
 import '../../../helpers/widgets/custom_button.dart';
-import '../../../helpers/widgets/dialogbox_util.dart';
 import '../../../helpers/widgets/textform_widget.dart';
 import '../../../utils/constants/color constants/colors.dart';
+import '../bloc/auth_states.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -62,64 +61,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
-      listener: (BuildContext context, state) {
-        if (state is AuthLoading) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            setState(() => isLoading = true);
-          });
-        } else {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            setState(() => isLoading = false);
-          });
-        }
-        if (state is AuthFailure) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            toastification.show(
-              showProgressBar: false,
-              description: Column(
-                children: [
-                  headingTextMedium(
-                    context,
-                    state.error,
-                    FontWeight.w500,
-                    12,
-                    whiteColor,
-                  ),
-                ],
-              ),
-              autoCloseDuration: const Duration(seconds: 7),
-              style: ToastificationStyle.fillColored,
-              type: ToastificationType.error,
-            );
-          });
-        } else if (state is AuthSucces) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/mainhome',
-            (Route<dynamic> route) => false,
+      listener: (context, state) {
+        if (state is AuthAuthenticated) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Welcome ${state.user!.name}!")),
           );
+
+          Navigator.pushReplacementNamed(context, "/mainhome");
+        } else if (state is AuthError) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            toastification.show(
-              showProgressBar: false,
-              description: Column(
-                children: [
-                  headingTextMedium(
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Colors.white,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(8.0),
+                      bottom: Radius.circular(8),
+                    ),
+                  ),
+                  title: Center(
+                    child: headingTextMedium(
+                      context,
+                      'Authentication Error!',
+                      FontWeight.w600,
+                      16,
+                      Colors.red,
+                    ),
+                  ),
+                  content: headingTextMedium(
                     context,
                     state.message,
                     FontWeight.w500,
                     12,
-                    whiteColor,
                   ),
-                ],
-              ),
-              autoCloseDuration: const Duration(seconds: 7),
-              style: ToastificationStyle.fillColored,
-              type: ToastificationType.success,
+                );
+              },
             );
           });
         }
       },
-      builder: (BuildContext context, state) {
+      builder: (context, state) {
         return Scaffold(
           backgroundColor: secondaryBg,
           body: SafeArea(
@@ -182,22 +165,66 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     SizedBox(height: 40),
-                    CustomButton(
-                      isLoading: isLoading,
-                      text: 'Create Account',
-                      onpressed: () {
+                    GestureDetector(
+                      onTap: () {
                         if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
                           context.read<AuthBloc>().add(
-                                SignupEvent(
-                                  name: nameController.text.trim(),
-                                  phone: phoneController.text.trim(),
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim(),
+                                RegisterUserEvent(
+                                  nameController.text,
+                                  phoneController.text,
+                                  emailController.text,
+                                  passwordController.text,
                                 ),
                               );
                         }
                       },
-                      color: secondaryColor,
+                      child: Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.transparent),
+                          color: secondaryColor,
+                          borderRadius: BorderRadius.circular(50),
+                          boxShadow: [
+                            BoxShadow(
+                              color: secondaryColor.withOpacity(0.25),
+                              blurRadius: 5,
+                              spreadRadius: 1,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              state is AuthLoading
+                                  ? SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: whiteColor,
+                                      ),
+                                    )
+                                  : SizedBox.shrink(),
+                              SizedBox(width: 8),
+                              Text(
+                                'Create Account',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 30),
                     Row(

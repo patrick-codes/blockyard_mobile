@@ -3,11 +3,15 @@ import 'package:blockyard_mobile/presentation/authentication/pages/register_scre
 import 'package:flutter/material.dart';
 import '../../presentation/home/home.dart';
 import '../../presentation/home/main_home.dart';
+import '../../presentation/intro/splash/splash_screen.dart';
 import '../../presentation/products/pages/product_detail_page.dart';
 import 'route_transition.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
+    case '/register':
+      return slideFromRight(const SignUpScreen());
+
     case '/login':
       return slideFromRight(const LoginScreen());
 
@@ -27,7 +31,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     default:
       return MaterialPageRoute(
-        builder: (_) => const SignUpScreen(),
+        builder: (_) => const SplashScreen(),
       );
   }
 }

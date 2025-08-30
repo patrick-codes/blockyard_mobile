@@ -1,8 +1,10 @@
 import 'package:blockyard_mobile/helpers/widgets/cedi_widget.dart';
 import 'package:blockyard_mobile/utils/constants/color%20constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import '../../helpers/text_widgets.dart';
+import '../products/bloc/product_bloc.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -14,6 +16,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProductBloc>().add(FetchProducts());
+  }
+
   static var items = [
     'Standard',
     'Hollow',
@@ -419,20 +427,237 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                           ),
                           SizedBox(height: 6),
+                          // SizedBox(
+                          //     height: 240,
+                          //     child: ListView.builder(
+                          //       scrollDirection: Axis.horizontal,
+                          //       itemCount: 4,
+                          //       itemBuilder: (BuildContext context, int index) {
+                          //         return Row(
+                          //           children: [
+                          //             GestureDetector(
+                          //               onTap: () {
+                          //                 Navigator.pushNamed(
+                          //                   context,
+                          //                   '/details',
+                          //                   arguments: {"id": imgs[index]},
+                          //                 );
+                          //               },
+                          //               child: Container(
+                          //                 width: 150,
+                          //                 height: 220,
+                          //                 margin: const EdgeInsets.all(8),
+                          //                 decoration: BoxDecoration(
+                          //                   color: Colors.white,
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(8),
+                          //                 ),
+                          //                 child: Stack(
+                          //                   children: [
+                          //                     Column(
+                          //                       mainAxisAlignment:
+                          //                           MainAxisAlignment.start,
+                          //                       crossAxisAlignment:
+                          //                           CrossAxisAlignment.start,
+                          //                       children: [
+                          //                         Container(
+                          //                           height: 130,
+                          //                           decoration: BoxDecoration(
+                          //                             image: DecorationImage(
+                          //                               image: Image.asset(
+                          //                                 imgs[index],
+                          //                               ).image,
+                          //                               fit: BoxFit.cover,
+                          //                             ),
+                          //                             color: outlineGrey,
+                          //                             // color: const Color.fromARGB(
+                          //                             //   255, 233, 248, 255),
+                          //                             borderRadius:
+                          //                                 BorderRadius.circular(
+                          //                                     8),
+                          //                           ),
+                          //                           child: Column(
+                          //                             children: [
+                          //                               SizedBox(height: 5),
+                          //                               Row(
+                          //                                 mainAxisAlignment:
+                          //                                     MainAxisAlignment
+                          //                                         .end,
+                          //                                 children: [
+                          //                                   Container(
+                          //                                     height: 20,
+                          //                                     width: 90,
+                          //                                     decoration:
+                          //                                         BoxDecoration(
+                          //                                       color: const Color
+                          //                                           .fromARGB(
+                          //                                           156,
+                          //                                           238,
+                          //                                           238,
+                          //                                           238),
+                          //                                       borderRadius:
+                          //                                           BorderRadius
+                          //                                               .circular(
+                          //                                                   10),
+                          //                                       boxShadow: [
+                          //                                         BoxShadow(
+                          //                                           blurRadius:
+                          //                                               2,
+                          //                                           spreadRadius:
+                          //                                               1,
+                          //                                           color: Colors
+                          //                                               .grey
+                          //                                               .withOpacity(
+                          //                                                   0.5),
+                          //                                         ),
+                          //                                       ],
+                          //                                     ),
+                          //                                     child: Center(
+                          //                                       child: Text(
+                          //                                         overflow:
+                          //                                             TextOverflow
+                          //                                                 .ellipsis,
+                          //                                         softWrap:
+                          //                                             true,
+                          //                                         '16x8x8 inches',
+                          //                                         style:
+                          //                                             const TextStyle(
+                          //                                           fontWeight:
+                          //                                               FontWeight
+                          //                                                   .bold,
+                          //                                           fontSize:
+                          //                                               10,
+                          //                                           color:
+                          //                                               blackColor,
+                          //                                         ),
+                          //                                       ),
+                          //                                     ),
+                          //                                   ),
+                          //                                 ],
+                          //                               )
+                          //                             ],
+                          //                           ),
+                          //                         ),
+                          //                         const SizedBox(height: 5),
+                          //                         Padding(
+                          //                           padding:
+                          //                               const EdgeInsets.all(
+                          //                                   5.0),
+                          //                           child: Column(
+                          //                             crossAxisAlignment:
+                          //                                 CrossAxisAlignment
+                          //                                     .start,
+                          //                             children: [
+                          //                               Text(
+                          //                                 overflow: TextOverflow
+                          //                                     .ellipsis,
+                          //                                 softWrap: true,
+                          //                                 '${items[index]} Blocks',
+                          //                                 style: TextStyle(
+                          //                                   fontSize: 14,
+                          //                                   color: blackColor,
+                          //                                   fontWeight:
+                          //                                       FontWeight.bold,
+                          //                                 ),
+                          //                               ),
+                          //                               SizedBox(height: 3),
+                          //                               Text(
+                          //                                 overflow: TextOverflow
+                          //                                     .ellipsis,
+                          //                                 softWrap: true,
+                          //                                 'Soft Gray | 32 lbs each',
+                          //                                 style:
+                          //                                     const TextStyle(
+                          //                                   fontSize: 10,
+                          //                                   color:
+                          //                                       Colors.black45,
+                          //                                 ),
+                          //                               ),
+                          //                               SizedBox(height: 5),
+                          //                               Row(
+                          //                                 mainAxisAlignment:
+                          //                                     MainAxisAlignment
+                          //                                         .spaceBetween,
+                          //                                 children: [
+                          //                                   Row(
+                          //                                     children: [
+                          //                                       CediSign(
+                          //                                         size: 20,
+                          //                                         weight:
+                          //                                             FontWeight
+                          //                                                 .bold,
+                          //                                       ),
+                          //                                       Text(
+                          //                                         '2.99',
+                          //                                         style: TextStyle(
+                          //                                             fontSize:
+                          //                                                 20,
+                          //                                             color:
+                          //                                                 blackColor,
+                          //                                             fontWeight:
+                          //                                                 FontWeight
+                          //                                                     .bold),
+                          //                                       ),
+                          //                                     ],
+                          //                                   ),
+                          //                                   Row(
+                          //                                     children: [
+                          //                                       const Icon(
+                          //                                         Icons
+                          //                                             .location_on,
+                          //                                         color:
+                          //                                             iconGrey,
+                          //                                         size: 10,
+                          //                                       ),
+                          //                                       Text(
+                          //                                         'Accra',
+                          //                                         style:
+                          //                                             TextStyle(
+                          //                                           fontSize:
+                          //                                               10,
+                          //                                           color:
+                          //                                               iconGrey,
+                          //                                         ),
+                          //                                       ),
+                          //                                     ],
+                          //                                   ),
+                          //                                 ],
+                          //                               ),
+                          //                             ],
+                          //                           ),
+                          //                         ),
+                          //                       ],
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         );
+                          //       },
+                          //     ))
+
                           SizedBox(
-                              height: 240,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 4,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Row(
-                                    children: [
-                                      GestureDetector(
+                            height: 240,
+                            child: BlocBuilder<ProductBloc, ProductState>(
+                              builder: (context, state) {
+                                if (state is ProductLoading) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                } else if (state is ProductLoaded) {
+                                  return ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: state.products.length,
+                                    itemBuilder: (context, index) {
+                                      final product = state.products[index];
+                                      return GestureDetector(
                                         onTap: () {
                                           Navigator.pushNamed(
                                             context,
                                             '/details',
-                                            arguments: {"id": imgs[index]},
+                                            arguments: {
+                                              "id": product.id,
+                                            },
                                           );
                                         },
                                         child: Container(
@@ -456,9 +681,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     height: 130,
                                                     decoration: BoxDecoration(
                                                       image: DecorationImage(
-                                                        image: Image.asset(
-                                                          imgs[index],
-                                                        ).image,
+                                                        image: NetworkImage(
+                                                          product.image,
+                                                        ),
                                                         fit: BoxFit.cover,
                                                       ),
                                                       color: outlineGrey,
@@ -511,7 +736,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                           .ellipsis,
                                                                   softWrap:
                                                                       true,
-                                                                  '16x8x8 inches',
+                                                                  product.stock
+                                                                      .toString(),
                                                                   style:
                                                                       const TextStyle(
                                                                     fontWeight:
@@ -544,7 +770,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           softWrap: true,
-                                                          '${items[index]} Blocks',
+                                                          product.name,
                                                           style: TextStyle(
                                                             fontSize: 14,
                                                             color: blackColor,
@@ -557,7 +783,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           softWrap: true,
-                                                          'Soft Gray | 32 lbs each',
+                                                          product.stock
+                                                              .toString(),
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 10,
@@ -580,7 +807,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                           .bold,
                                                                 ),
                                                                 Text(
-                                                                  '2.99',
+                                                                  product.price
+                                                                      .toString(),
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           20,
@@ -623,11 +851,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                             ],
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      );
+                                    },
                                   );
-                                },
-                              ))
+                                } else if (state is ProductError) {
+                                  return Center(
+                                      child: Text("Error: ${state.message}"));
+                                }
+                                return const SizedBox();
+                              },
+                            ),
+                          )
                         ],
                       ),
                     ),

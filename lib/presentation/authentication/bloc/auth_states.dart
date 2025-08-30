@@ -1,42 +1,29 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'auth_bloc.dart';
+import '../repository/data model/user_model.dart';
 
-sealed class AuthState {}
+abstract class AuthState {}
 
-final class AuthInitial extends AuthState {}
+class AuthInitial extends AuthState {}
 
-final class AuthSucces extends AuthState {
-  final String message;
-  final UserModel userModel;
-
-  AuthSucces({
-    required this.message,
-    required this.userModel,
+class AuthLoading extends AuthState {
+  final bool? isLoadingspin;
+  AuthLoading({
+    this.isLoadingspin,
   });
 }
 
 class AuthAuthenticated extends AuthState {
-  final UserModel userModel;
-
-  AuthAuthenticated({required this.userModel});
+  final UserModel? user;
+  final String? message;
+  AuthAuthenticated([this.user, this.message]);
 }
 
-class AuthUnauthenticated extends AuthState {}
-
-final class AuthFailure extends AuthState {
-  final String error;
-
-  AuthFailure({required this.error});
-}
-
-final class AuthLoading extends AuthState {
-  final bool isLoading;
-
-  AuthLoading({required this.isLoading});
-}
-
-final class AuthLogoutSucces extends AuthState {
+class AuthSuccess extends AuthState {
   final String message;
+  AuthSuccess(this.message);
+}
 
-  AuthLogoutSucces({required this.message});
+class AuthError extends AuthState {
+  final String message;
+  AuthError(this.message);
 }

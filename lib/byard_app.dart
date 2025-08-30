@@ -1,4 +1,5 @@
 import 'package:blockyard_mobile/presentation/authentication/pages/register_screen.dart';
+import 'package:blockyard_mobile/presentation/intro/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 import 'helpers/widgets/generate_route.dart';
@@ -14,7 +15,7 @@ class BlockyardApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
-          '/': (context) => const SignUpScreen(),
+          '/': (context) => const SplashScreen(),
         },
         title: 'Block Yard Mobile',
         onGenerateRoute: generateRoute,
