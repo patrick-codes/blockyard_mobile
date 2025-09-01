@@ -1,6 +1,5 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-import '../../products/repository/model/products_model.dart';
 import '../repository/model/cart_model.dart';
 
 part 'cart_events.dart';

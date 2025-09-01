@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../repository/order model/order_model.dart';
 
 class OrderHistoryPage extends StatelessWidget {
-  const OrderHistoryPage({Key? key}) : super(key: key);
+  const OrderHistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {

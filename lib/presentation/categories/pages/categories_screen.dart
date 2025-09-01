@@ -7,8 +7,7 @@ import 'bloc/category_bloc.dart';
 
 class CategoriesScreen extends StatelessWidget {
   final String categoryName;
-  const CategoriesScreen({Key? key, required this.categoryName})
-      : super(key: key);
+  const CategoriesScreen({super.key, required this.categoryName});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class CategoriesScreen extends StatelessWidget {
                 itemCount: state.products.length,
                 itemBuilder: (context, index) {
                   final product = state.products[index];
-                  if (state.products.length == 0 || state.products.isEmpty) {
+                  if (state.products.isEmpty || state.products.isEmpty) {
                     return Center(
                       child: Text('No product found under this category'),
                     );

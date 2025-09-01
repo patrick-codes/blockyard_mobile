@@ -1,4 +1,3 @@
-import 'package:blockyard_mobile/presentation/authentication/pages/register_screen.dart';
 import 'package:blockyard_mobile/presentation/intro/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';

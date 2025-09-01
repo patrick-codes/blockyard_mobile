@@ -6,7 +6,6 @@ import 'package:icons_plus/icons_plus.dart';
 import '../../helpers/text_widgets.dart';
 import '../categories/pages/categories_screen.dart';
 import '../checkout/bloc/cart_bloc.dart';
-import '../checkout/repository/model/cart_model.dart';
 import '../products/bloc/product_bloc.dart';
 
 class MyHomePage extends StatefulWidget {

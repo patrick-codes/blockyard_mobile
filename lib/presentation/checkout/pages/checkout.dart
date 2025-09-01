@@ -1,7 +1,6 @@
 import 'package:blockyard_mobile/helpers/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../helpers/widgets/custom_appbar.dart';
 import '../../../helpers/widgets/custom_button.dart';
@@ -9,7 +8,6 @@ import '../../../utils/constants/color constants/colors.dart';
 import '../bloc/cart_bloc.dart';
 import '../bloc/order bloc/order_bloc.dart';
 import '../repository/order model/order_model.dart';
-import 'order_history_page.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});

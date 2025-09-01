@@ -2,7 +2,6 @@ import 'package:blockyard_mobile/presentation/authentication/bloc/auth_bloc.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../helpers/text_widgets.dart';
-import '../../../helpers/widgets/custom_button.dart';
 import '../../../helpers/widgets/textform_widget.dart';
 import '../../../utils/constants/color constants/colors.dart';
 import '../bloc/auth_events.dart';

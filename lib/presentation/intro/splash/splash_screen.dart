@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../utils/constants/color constants/colors.dart';
-import '../../../utils/constants/image constants/image_constants.dart';
 import '../../authentication/bloc/auth_bloc.dart';
 import '../../authentication/bloc/auth_states.dart';
 

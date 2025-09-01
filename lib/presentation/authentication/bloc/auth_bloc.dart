@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../data/dio/auth_repository.dart';
 import '../../../utils/constants/api constants/api_constants.dart';
 import '../repository/data model/user_model.dart';
 import 'auth_events.dart';
