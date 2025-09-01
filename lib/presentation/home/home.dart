@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import '../../helpers/text_widgets.dart';
+import '../categories/pages/categories_screen.dart';
+import '../checkout/bloc/cart_bloc.dart';
+import '../checkout/repository/model/cart_model.dart';
 import '../products/bloc/product_bloc.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -44,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
       extendBody: true,
       backgroundColor: outlineGrey,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(195),
+        preferredSize: const Size.fromHeight(175),
         child: Container(
           decoration: BoxDecoration(
             color: whiteColor,
@@ -95,16 +98,54 @@ class _MyHomePageState extends State<MyHomePage> {
                       backgroundColor: whiteColor,
                       actions: [
                         GestureDetector(
-                          onTap: () {},
-                          child: CircleAvatar(
-                            backgroundColor: outlineGrey,
-                            child: Center(
-                              child: Icon(
-                                MingCute.notification_line,
-                                size: 21,
-                                color: blackColor,
-                              ),
-                            ),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/cart');
+                          },
+                          child: BlocBuilder<CartBloc, CartState>(
+                            builder: (context, cartState) {
+                              return Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: whiteColor,
+                                    child: Center(
+                                      child: Icon(
+                                        MingCute.shopping_cart_1_line,
+                                        size: 20,
+                                        color: blackColor,
+                                      ),
+                                    ),
+                                  ),
+                                  // Badge for number of items
+                                  if (cartState.items.isNotEmpty)
+                                    Positioned(
+                                      right: -2,
+                                      top: -2,
+                                      child: Container(
+                                        padding: EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        constraints: BoxConstraints(
+                                          minWidth: 18,
+                                          minHeight: 18,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            cartState.items.length.toString(),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              );
+                            },
                           ),
                         ),
                         SizedBox(width: 15),
@@ -114,12 +155,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           CircleAvatar(
                             backgroundColor: primaryColor,
-                            child: Center(
-                              child: Icon(
-                                Icons.verified_outlined,
-                                color: blackColor,
-                              ),
-                            ),
+                            backgroundImage:
+                                Image.asset('assets/images/logo.png').image,
                           ),
                         ],
                       ),
@@ -128,16 +165,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          appbarText(
-                            context,
-                            'Delivery address',
-                            iconGrey,
-                            12,
-                          ),
                           SizedBox(height: 5),
                           headingTextMedium(
                             context,
-                            '92 Hight Street, Tanoso',
+                            'Block Yard Ghana',
                             FontWeight.w600,
                             15,
                           ),
@@ -146,51 +177,51 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SizedBox(height: 15),
                     SizedBox(
-                      height: 120,
+                      height: 100,
                       width: MediaQuery.of(context).size.width,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
                           children: [
-                            TextFormField(
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(
-                                    fontSize: 15,
-                                    color: blackColor,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Type something';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                hintText: "Search the entire yard....",
-                                hintStyle: TextStyle(
-                                    color: Colors.black54, fontSize: 13),
-                                prefixIcon: const Icon(
-                                  MingCute.search_2_line,
-                                  color: Colors.black54,
-                                  weight: 5,
-                                  size: 25,
-                                ),
-                                filled: true,
-                                isDense: true,
-                                fillColor: outlineGrey.withOpacity(0.6),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 18),
+                            // TextFormField(
+                            //   style: Theme.of(context)
+                            //       .textTheme
+                            //       .bodySmall!
+                            //       .copyWith(
+                            //         fontSize: 15,
+                            //         color: blackColor,
+                            //         fontWeight: FontWeight.w100,
+                            //       ),
+                            //   validator: (value) {
+                            //     if (value!.isEmpty) {
+                            //       return 'Type something';
+                            //     }
+                            //     return null;
+                            //   },
+                            //   decoration: InputDecoration(
+                            //     hintText: "Search the entire yard....",
+                            //     hintStyle: TextStyle(
+                            //         color: Colors.black54, fontSize: 13),
+                            //     prefixIcon: const Icon(
+                            //       MingCute.search_2_line,
+                            //       color: Colors.black54,
+                            //       weight: 5,
+                            //       size: 25,
+                            //     ),
+                            //     filled: true,
+                            //     isDense: true,
+                            //     fillColor: outlineGrey.withOpacity(0.6),
+                            //     focusedBorder: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(10),
+                            //       borderSide: BorderSide.none,
+                            //     ),
+                            //     enabledBorder: OutlineInputBorder(
+                            //       borderSide: BorderSide.none,
+                            //       borderRadius: BorderRadius.circular(10),
+                            //     ),
+                            //   ),
+                            // ),
+                            // SizedBox(height: 18),
                             Container(
                               height: 50,
                               width: MediaQuery.of(context).size.width,
@@ -288,31 +319,31 @@ class _MyHomePageState extends State<MyHomePage> {
                                 FontWeight.bold,
                                 18,
                               ),
-                              Row(
-                                children: [
-                                  subheadingText(
-                                    context,
-                                    'see all',
-                                    size: 13,
-                                  ),
-                                  SizedBox(width: 7),
-                                  Container(
-                                    height: 25,
-                                    width: 25,
-                                    decoration: BoxDecoration(
-                                      color: outlineGrey,
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: blackColor,
-                                        size: 13,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Row(
+                              //   children: [
+                              //     subheadingText(
+                              //       context,
+                              //       'see all',
+                              //       size: 13,
+                              //     ),
+                              //     SizedBox(width: 7),
+                              //     Container(
+                              //       height: 25,
+                              //       width: 25,
+                              //       decoration: BoxDecoration(
+                              //         color: outlineGrey,
+                              //         borderRadius: BorderRadius.circular(30),
+                              //       ),
+                              //       child: Center(
+                              //         child: Icon(
+                              //           Icons.arrow_forward_ios_rounded,
+                              //           color: blackColor,
+                              //           size: 13,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                           SizedBox(height: 15),
@@ -322,53 +353,64 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: ListView.builder(
                               physics: BouncingScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: 5,
+                              itemCount: items.length, // dynamic count
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (BuildContext context, int index) {
-                                return Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 65,
-                                      width: 65,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(45),
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                        ),
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: Image.asset(
-                                            imgs[index],
-                                          ).image,
+                                return GestureDetector(
+                                  onTap: () {
+                                    // Navigate and pass category name
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => CategoriesScreen(
+                                          categoryName: items[index],
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Center(
-                                      child: Text(
-                                        items[index],
-                                        softWrap: true,
-                                        overflow: TextOverflow.visible,
-                                        maxLines: 1,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 65,
+                                        width: 65,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(45),
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(imgs[index]),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(height: 5),
+                                      Center(
+                                        child: Text(
+                                          items[index],
+                                          softWrap: true,
+                                          overflow: TextOverflow.visible,
+                                          maxLines: 1,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 );
                               },
                             ),
                           ),
-                          SizedBox(height: 18),
+                          SizedBox(height: 30),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -376,54 +418,54 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   headingTextMedium(
                                     context,
-                                    'Flash Sale',
+                                    'Selling Blocks',
                                     FontWeight.bold,
                                     18,
                                   ),
-                                  SizedBox(width: 8),
-                                  Container(
-                                    height: 25,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Center(
-                                      child: headingTextMedium(
-                                        context,
-                                        '02:59:23',
-                                        FontWeight.w500,
-                                        13,
-                                      ),
-                                    ),
-                                  ),
+                                  // SizedBox(width: 8),
+                                  // Container(
+                                  //   height: 25,
+                                  //   width: 70,
+                                  //   decoration: BoxDecoration(
+                                  //     color: primaryColor,
+                                  //     borderRadius: BorderRadius.circular(5),
+                                  //   ),
+                                  //   child: Center(
+                                  //     child: headingTextMedium(
+                                  //       context,
+                                  //       '02:59:23',
+                                  //       FontWeight.w500,
+                                  //       13,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  subheadingText(
-                                    context,
-                                    'see all',
-                                    size: 13,
-                                  ),
-                                  SizedBox(width: 7),
-                                  Container(
-                                    height: 25,
-                                    width: 25,
-                                    decoration: BoxDecoration(
-                                      color: outlineGrey,
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: blackColor,
-                                        size: 13,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Row(
+                              //   children: [
+                              //     subheadingText(
+                              //       context,
+                              //       'see all',
+                              //       size: 13,
+                              //     ),
+                              //     SizedBox(width: 7),
+                              //     Container(
+                              //       height: 25,
+                              //       width: 25,
+                              //       decoration: BoxDecoration(
+                              //         color: outlineGrey,
+                              //         borderRadius: BorderRadius.circular(30),
+                              //       ),
+                              //       child: Center(
+                              //         child: Icon(
+                              //           Icons.arrow_forward_ios_rounded,
+                              //           color: blackColor,
+                              //           size: 13,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                           SizedBox(height: 6),
@@ -736,7 +778,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                           .ellipsis,
                                                                   softWrap:
                                                                       true,
-                                                                  product.stock
+                                                                  'Stock - ${product.stock}'
                                                                       .toString(),
                                                                   style:
                                                                       const TextStyle(
@@ -783,7 +825,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           softWrap: true,
-                                                          product.stock
+                                                          product.description
                                                               .toString(),
                                                           style:
                                                               const TextStyle(
@@ -824,13 +866,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                                               children: [
                                                                 const Icon(
                                                                   Icons
-                                                                      .location_on,
+                                                                      .category,
                                                                   color:
                                                                       iconGrey,
                                                                   size: 10,
                                                                 ),
+                                                                SizedBox(
+                                                                    width: 5),
                                                                 Text(
-                                                                  'Accra',
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  product
+                                                                      .category
+                                                                      .toString(),
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:

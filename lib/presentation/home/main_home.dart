@@ -1,7 +1,9 @@
+import 'package:blockyard_mobile/presentation/checkout/pages/cart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:icons_plus/icons_plus.dart';
 import '../../../utils/constants/color constants/colors.dart';
+import '../profile/profiile_page.dart';
 import 'home.dart';
 
 class MainHomePage extends StatefulWidget {
@@ -19,10 +21,8 @@ class _MainHomePageState extends State<MainHomePage> {
 
   List<Widget> pages = [
     MyHomePage(),
-    Container(),
-    Container(),
-    Container(),
-    Container(),
+    CartPage(),
+    ProfilePage(),
   ];
 
   int initPage = 0;
@@ -70,16 +70,8 @@ class _MainHomePageState extends State<MainHomePage> {
                 text: 'Home',
               ),
               GButton(
-                icon: MingCute.search_3_line,
-                text: 'Catalog',
-              ),
-              GButton(
                 icon: MingCute.shopping_cart_2_line,
                 text: 'Cart',
-              ),
-              GButton(
-                icon: MingCute.heart_line,
-                text: 'Favorite',
               ),
               GButton(
                 icon: MingCute.user_4_line,

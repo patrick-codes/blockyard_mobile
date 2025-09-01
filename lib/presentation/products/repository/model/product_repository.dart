@@ -29,4 +29,26 @@ class ProductRepository {
       throw Exception("Unexpected response format: ${response.data}");
     }
   }
+
+  Future<List<Product>> fetchProductsByCategory(String categoryName) async {
+    try {
+      final response = await Dio().get(
+        getProductsUrl,
+        queryParameters: {"category": categoryName}, // pass category here
+      );
+
+      if (response.statusCode == 200) {
+        final data = response.data as List;
+        // Convert only products that match the category
+        return data
+            .map((json) => Product.fromJson(json))
+            .where((product) => product.category == categoryName)
+            .toList();
+      } else {
+        throw Exception("Failed to fetch products by category");
+      }
+    } catch (e) {
+      throw Exception("Dio error: $e");
+    }
+  }
 }

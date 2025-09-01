@@ -1,6 +1,8 @@
 import 'package:blockyard_mobile/presentation/authentication/pages/login.dart';
 import 'package:blockyard_mobile/presentation/authentication/pages/register_screen.dart';
+import 'package:blockyard_mobile/presentation/checkout/pages/checkout.dart';
 import 'package:flutter/material.dart';
+import '../../presentation/checkout/pages/cart_page.dart';
 import '../../presentation/home/home.dart';
 import '../../presentation/home/main_home.dart';
 import '../../presentation/intro/splash/splash_screen.dart';
@@ -28,6 +30,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           id: args['id'],
         ),
       );
+
+    case '/cart':
+      return slideFromRight(CartPage());
+
+    case '/checkout':
+      return slideFromRight(CheckoutPage());
 
     default:
       return MaterialPageRoute(

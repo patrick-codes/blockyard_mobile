@@ -11,3 +11,8 @@ const String getProductsUrl = '$baseurl/api/products';
 const String getSingleProductUrl = '$baseurl/api/products';
 const String updateProductUrl = '$baseurl/api/products';
 const String deleteProductUrl = '$baseurl/api/products';
+
+//Orders
+const String createOrderUrl = '$baseurl/api/orders';
+const String getOrdersUrl = '$baseurl/api/orders';
+const String deleteOrderUrl = '$baseurl/api/orders';

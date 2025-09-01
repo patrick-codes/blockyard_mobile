@@ -69,37 +69,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
           Navigator.pushReplacementNamed(context, "/mainhome");
         } else if (state is AuthError) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: Colors.white,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(8.0),
-                      bottom: Radius.circular(8),
-                    ),
-                  ),
-                  title: Center(
-                    child: headingTextMedium(
-                      context,
-                      'Authentication Error!',
-                      FontWeight.w600,
-                      16,
-                      Colors.red,
-                    ),
-                  ),
-                  content: headingTextMedium(
-                    context,
-                    state.message,
-                    FontWeight.w500,
-                    12,
-                  ),
-                );
-              },
-            );
-          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                duration: Duration(seconds: 3),
+                content: Text("${state.message}!")),
+          );
+          // WidgetsBinding.instance.addPostFrameCallback((_) {
+          //   showDialog(
+          //     context: context,
+          //     builder: (BuildContext context) {
+          //       return AlertDialog(
+          //         backgroundColor: Colors.white,
+          //         shape: const RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.vertical(
+          //             top: Radius.circular(8.0),
+          //             bottom: Radius.circular(8),
+          //           ),
+          //         ),
+          //         title: Center(
+          //           child: headingTextMedium(
+          //             context,
+          //             'Authentication Error!',
+          //             FontWeight.w600,
+          //             16,
+          //             Colors.red,
+          //           ),
+          //         ),
+          //         content: headingTextMedium(
+          //           context,
+          //           state.message,
+          //           FontWeight.w500,
+          //           12,
+          //         ),
+          //       );
+          //     },
+          //   );
+          // });
         }
       },
       builder: (context, state) {

@@ -5,8 +5,9 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../helpers/text_widgets.dart';
 import '../../../utils/constants/color constants/colors.dart';
+import '../../checkout/bloc/cart_bloc.dart';
+import '../../checkout/repository/model/cart_model.dart';
 import '../bloc/product detail bloc/product_detail_bloc.dart';
-import '../repository/model/products_model.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final String id;
@@ -25,8 +26,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     super.initState();
   }
 
-  //Product? state.product;
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductDetailBloc, ProductDetailState>(
@@ -38,14 +37,19 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       }
     }, builder: (context, state) {
       if (state is ProductDetailLoading) {
-        return Center(child: CircularProgressIndicator());
+        return Container(
+          color: whiteColor,
+          height: MediaQuery.of(context).size.width,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       } else if (state is ProductDetailLoaded) {
-        //state.product = state.product;
         return Scaffold(
           resizeToAvoidBottomInset: true,
           backgroundColor: whiteColor,
           bottomNavigationBar: SizedBox(
-            height: 110,
+            height: 80,
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -54,33 +58,67 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
               child: Column(
                 children: [
-                  Container(
-                    height: 55,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(13),
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: headingTextMedium(
-                        context,
-                        'Add to cart',
-                        FontWeight.w600,
-                        17,
+                  GestureDetector(
+                    onTap: () {
+                      context.read<CartBloc>().add(
+                            AddToCart(
+                              CartItem(
+                                id: state.product!.id,
+                                name: state.product!.name,
+                                price: state.product!.price,
+                                quantity: 1,
+                              ),
+                            ),
+                          );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Item added to cart!")),
+                      );
+                    },
+                    child: Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.transparent),
+                        color: secondaryColor,
+                        borderRadius: BorderRadius.circular(50),
+                        boxShadow: [
+                          BoxShadow(
+                            color: secondaryColor.withOpacity(0.25),
+                            blurRadius: 5,
+                            spreadRadius: 1,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Text(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 10,
-                    softWrap: true,
-                    'Delivery on 26th October',
-                    style: const TextStyle(
-                      height: 1.5,
-                      fontSize: 14,
-                      color: Colors.black87,
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            state is ProductDetailLoading
+                                ? SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: whiteColor,
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            SizedBox(width: 8),
+                            Text(
+                              'Add to cart',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    color: whiteColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -162,30 +200,56 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               backgroundColor: Colors.transparent,
                               actions: [
                                 GestureDetector(
-                                  onTap: () {},
-                                  child: CircleAvatar(
-                                    backgroundColor: whiteColor,
-                                    child: Center(
-                                      child: Icon(
-                                        MingCute.heart_fill,
-                                        size: 21,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 18),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: CircleAvatar(
-                                    backgroundColor: whiteColor,
-                                    child: Center(
-                                      child: Icon(
-                                        MingCute.upload_line,
-                                        size: 21,
-                                        color: blackColor,
-                                      ),
-                                    ),
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/cart');
+                                  },
+                                  child: BlocBuilder<CartBloc, CartState>(
+                                    builder: (context, cartState) {
+                                      return Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundColor: whiteColor,
+                                            child: Center(
+                                              child: Icon(
+                                                MingCute.shopping_cart_1_line,
+                                                size: 20,
+                                                color: blackColor,
+                                              ),
+                                            ),
+                                          ),
+                                          // Badge for number of items
+                                          if (cartState.items.isNotEmpty)
+                                            Positioned(
+                                              right: -2,
+                                              top: -2,
+                                              child: Container(
+                                                padding: EdgeInsets.all(4),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                constraints: BoxConstraints(
+                                                  minWidth: 18,
+                                                  minHeight: 18,
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    cartState.items.length
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                        ],
+                                      );
+                                    },
                                   ),
                                 ),
                                 SizedBox(width: 15),

@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen>
           await Future.delayed(const Duration(seconds: 2));
           Navigator.pushNamedAndRemoveUntil(
               context, '/mainhome', (route) => false);
-        } else if (state is AuthError) {
+        } else {
           await Future.delayed(const Duration(seconds: 2));
           Navigator.pushNamedAndRemoveUntil(
               context, '/register', (route) => false);

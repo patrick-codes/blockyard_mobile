@@ -27,3 +27,7 @@ class AuthError extends AuthState {
   final String message;
   AuthError(this.message);
 }
+
+class ProfileLoggedOut extends AuthState {
+  ProfileLoggedOut();
+}

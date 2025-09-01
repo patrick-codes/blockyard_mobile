@@ -17,3 +17,10 @@ class LoginUserEvent extends AuthEvent {
 
   LoginUserEvent(this.email, this.password);
 }
+
+class LogoutProfile extends AuthEvent {}
+
+class LoginProfile extends AuthEvent {
+  final String token;
+  LoginProfile(this.token);
+}

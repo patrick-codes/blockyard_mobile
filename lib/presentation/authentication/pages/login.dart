@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
   bool isToggeled = true;
   bool isVisible = true;
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -58,36 +58,13 @@ class _LoginScreenState extends State<LoginScreen> {
             SnackBar(content: Text("Welcome back, ${state.user!.name}!")),
           );
           Navigator.pushReplacementNamed(context, "/mainhome");
-        } else if (state is AuthError) {
+        }
+        if (state is AuthError) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: Colors.white,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(8.0),
-                      bottom: Radius.circular(8),
-                    ),
-                  ),
-                  title: Center(
-                    child: headingTextMedium(
-                      context,
-                      'Authentication Error!',
-                      FontWeight.w600,
-                      16,
-                      Colors.red,
-                    ),
-                  ),
-                  content: headingTextMedium(
-                    context,
-                    state.message,
-                    FontWeight.w500,
-                    12,
-                  ),
-                );
-              },
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                  duration: Duration(seconds: 3),
+                  content: Text("${state.message}!")),
             );
           });
         }
@@ -109,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     subheadingText(context, 'continue shopping by logging in'),
                     SizedBox(height: 30),
                     Form(
-                      key: formKey,
+                      key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -135,8 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 40),
                     GestureDetector(
                       onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          formKey.currentState!.save();
+                        if (_formKey.currentState!.validate()) {
+                          // _formKey.currentState!.save();
                           context.read<AuthBloc>().add(
                                 LoginUserEvent(
                                   emailController.text,
